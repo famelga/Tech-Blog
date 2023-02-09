@@ -18,12 +18,13 @@
       <nav>
         {{#if logged_in}}
         <a href="/nav">Tech Blog</a> |
-        <button class="no-button" id="logout">homepage</button>
-        <button class="no-button" id="logout">dashboard</button>
+        <a href="/homepage">homepage</a>
+        <a href="/dashboard">dashboard</a>
         <button class="no-button" id="logout">logout</button>
         {{else}}
-        <a href="/signup">sign up</a>
-        <a href="/signin">sign in</a>
+        <a href="/homepage">homepage</a>
+        <a href="/login">dashboard</a>
+        <a href="/login">login</a>
         {{/if}}
       </nav>
     </header>
@@ -35,7 +36,6 @@
     </footer>
   </div>
 
-  <!-- Render script for logged in users only -->
   {{#if logged_in}}
   <script src="/js/logout.js"></script>
   {{/if}}
