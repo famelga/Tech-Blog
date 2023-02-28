@@ -1,52 +1,50 @@
-// const router = require('express').Router();
-// const { User } = require('../models');
+const router = require('express').Router();
+const { User, Blogpost, Comment } = require('../models');
 // // const withAuth = require('../utils/auth');
 
-// router.get('/', async (req, res) => {
-//   try {
-//     const projectData = await Project.findAll({
-//       include: [
-//         {
-//           model: User,
-//           attributes: ['name'],
-//         },
-//       ],
-//     });
+router.get('/', async (req, res) => {
+  try {
+    const blogpostData = await Blogpost.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+      ],
+    });
 
-//     // Serialize data so the template can read it
-//     const projects = projectData.map((project) => project.get({ plain: true }));
+    const blogposts = blogpostData.map((blogpost) => blogpost.get({ plain: true }));
 
-//     // Pass serialized data and session flag into template
-//     res.render('homepage', { 
-//       projects, 
-//       logged_in: req.session.logged_in 
-//     });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+    res.render('homepage', { 
+      blogposts, 
+      logged_in: req.session.logged_in 
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-// router.get('/project/:id', async (req, res) => {
-//   try {
-//     const projectData = await Project.findByPk(req.params.id, {
-//       include: [
-//         {
-//           model: User,
-//           attributes: ['name'],
-//         },
-//       ],
-//     });
+router.get('/blogpost/:id', async (req, res) => {
+  try {
+    const blogpostData = await Blogpost.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+      ],
+    });
 
-//     const project = projectData.get({ plain: true });
+    const blogpost = blogpostData.get({ plain: true });
 
-//     res.render('project', {
-//       ...project,
-//       logged_in: req.session.logged_in
-//     });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+    res.render('dashboard', {
+      ...blogpost,
+      logged_in: req.session.logged_in
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // // Use withAuth middleware to prevent access to route
 // router.get('/profile', withAuth, async (req, res) => {
